@@ -22,7 +22,7 @@ module.exports = (app) => {
   // entries
 
     app.post('/entries', EntriesController.add),
-    app.get('/entries/:id', EntriesController.getByName),
+    app.get('/entries', EntriesController.getEntries),
 
 
 

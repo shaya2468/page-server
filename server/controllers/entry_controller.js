@@ -17,14 +17,11 @@ module.exports = {
     });
    },
 
-   getByName(req, res){
-    var name = req.params.id;
-    console.log('params is ' + JSON.stringify(req.params));
-    console.log('query is ' + JSON.stringify(req.query));
+   getEntries(req, res){
 
-    Entry.find({
-      user_name: name
-    })
+    var filters = _.pick(req.query, ['site_name', 'user_name']);
+    
+    Entry.find(filters)
     .then((docs) => {
       res.send(docs);
     }).catch((e) => {

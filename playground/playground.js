@@ -43,7 +43,10 @@ var getStuff = function(){
             // console.log('what?! ' + xhttp.status );
         }
     }
-    xhttp.open("GET", "http://localhost:3333/entries/kyle?aaa=bbb&blbbbb=pppp", true);
+
+
+    var queryThing = 'site_name=walla';
+    xhttp.open("GET", "http://localhost:3333/entries?" + queryThing, true);
     xhttp.send();
 }
 
