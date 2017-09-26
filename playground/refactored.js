@@ -40,6 +40,7 @@ var postStuff = function(site_name, time, referrer, user_name){
     xhttp.send(JSON.stringify(params)) // Make sure to stringify
 }
 
-var postInfo = postStuff.bind(this, 'nnn', 5555, "yahoo");
+var ts = Math.round((new Date()).getTime() / 1000);
+var postInfo = postStuff.bind(this, 'nnn', ts, "yahoo");
 
 getMyIp(postInfo)
