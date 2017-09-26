@@ -30,26 +30,10 @@ module.exports = {
   },
 
   getInitData(req, res){
-    // Entry.aggregate(
-    //   {$group: { _id:'$site_name'}})
-    //   .then((docs) =>{
-    //     res.send(docs);
-    //   }).catch((e) => {
-    //      res.status(400).send(e);
-    //   });
-
-    //   Entry.aggregate(
-    //     {$group: { _id:'$user_name'}})
-    //     .then((docs) =>{
-    //       res.send(docs);
-    //     }).catch((e) => {
-    //        res.status(400).send(e);
-    //     });
 
        Promise.all([Entry.aggregate({$group: { _id:'$site_name'}}), Entry.aggregate({$group: { _id:'$user_name'}})])
        .then((docs) =>{
-        
-        // cleanIds(docs[0]);
+
         var retData = {
           sites:cleanIds(docs[0]),
           users:cleanIds(docs[1])
