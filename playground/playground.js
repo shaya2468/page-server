@@ -17,7 +17,7 @@ var postStuff = function(){
     http.open('POST', 'http://localhost:3333/entries', false);
     http.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     
-    console.log('aaa');
+    
     http.onreadystatechange = function() {//Call a function when the state changes.
         console.log('bbb');
         if(http.readyState == 4 && http.status == 200) {
