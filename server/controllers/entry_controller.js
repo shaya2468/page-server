@@ -29,4 +29,46 @@ module.exports = {
     });
   },
 
+  getInitData(req, res){
+    // Entry.aggregate(
+    //   {$group: { _id:'$site_name'}})
+    //   .then((docs) =>{
+    //     res.send(docs);
+    //   }).catch((e) => {
+    //      res.status(400).send(e);
+    //   });
+
+    //   Entry.aggregate(
+    //     {$group: { _id:'$user_name'}})
+    //     .then((docs) =>{
+    //       res.send(docs);
+    //     }).catch((e) => {
+    //        res.status(400).send(e);
+    //     });
+
+       Promise.all([Entry.aggregate({$group: { _id:'$site_name'}}), Entry.aggregate({$group: { _id:'$user_name'}})])
+       .then((docs) =>{
+        
+        // cleanIds(docs[0]);
+        var retData = {
+          sites:cleanIds(docs[0]),
+          users:cleanIds(docs[1])
+        }
+        
+        res.send(retData);
+      }).catch((e) => {
+         res.status(400).send(e);
+      });
+  }
+
 };
+
+var cleanIds = (arr) => {
+  var retArr = [];
+  arr.forEach((el) => {
+    retArr.push(el._id);
+  })
+  console.log(retArr)
+  return retArr;
+
+}
