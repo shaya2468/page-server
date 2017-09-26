@@ -4,14 +4,12 @@ const _ = require('lodash');
 
 module.exports = {
   create(req, res) {
-    console.log('ddddiiiii');
-    var body = _.pick(req.body, ['email', 'password', 'name']);
+    var body = _.pick(req.body, ['name']);
     var user = new User(body);
 
-    user.save().then(() => {
-      return user.generateAuthToken();
-    }).then((token) => {
-      res.header('x-auth', token).send(user);
+    user.save()
+    .then((user) => {
+      res.header('x-auth', user.name).send(user);
     }).catch((e) => {
       res.status(400).send(e);
     })

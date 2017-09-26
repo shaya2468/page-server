@@ -4,6 +4,7 @@ const StudentsController = require('../controllers/student_controller');
 const TeachersController = require('../controllers/teacher_controller');
 const CoursesController = require('../controllers/course_controller');
 const GradesController = require('../controllers/grade_controller');
+const EntriesController = require('../controllers/entry_controller');
 
 
 var {authenticate} = require('../middleware/authenticate');
@@ -16,6 +17,16 @@ module.exports = (app) => {
   app.post('/users/login', UserController.login),
   app.delete('/users/me/token', authenticate, UserController.deleteToken),
   app.get('/users/me', authenticate, UserController.getMe),
+
+  
+  // entries
+
+    app.post('/entries', EntriesController.add),
+
+
+
+
+
 
   //students
   app.post('/students', authenticate, StudentsController.add),
