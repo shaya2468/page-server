@@ -20,8 +20,8 @@ module.exports = {
    getEntries(req, res){
 
     var filters = _.pick(req.query, ['site_name', 'user_name']);
-    
     Entry.find(filters)
+    .limit(100)
     .then((docs) => {
       res.send(docs);
     }).catch((e) => {
