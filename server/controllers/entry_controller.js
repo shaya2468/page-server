@@ -1,6 +1,6 @@
 const _ = require('lodash');
-const {Entry} = require('../models/entry');
-const {ObjectID} = require('mongodb');
+const { Entry } = require('../models/entry');
+const { ObjectID } = require('mongodb');
 module.exports = {
 
   add(req, res) {
@@ -8,41 +8,41 @@ module.exports = {
     var entry = new Entry(body);
 
     entry
-    .save()
-    .then((doc) => {
+      .save()
+      .then((doc) => {
         res.send(doc);
-    }, 
-    (e) => {
+      },
+      (e) => {
         res.status(400).send(e);
-    });
-   },
+      });
+  },
 
-   getEntries(req, res){
+  getEntries(req, res) {
 
     var filters = _.pick(req.query, ['site_name', 'user_name']);
     Entry.find(filters)
-    .limit(100)
-    .sort({ time: -1 })
-    .then((docs) => {
-      res.send(docs);
-    }).catch((e) => {
-      res.status(400).send(e);
-    });
+      .limit(100)
+      .sort({ time: -1 })
+      .then((docs) => {
+        res.send(docs);
+      }).catch((e) => {
+        res.status(400).send(e);
+      });
   },
 
-  getInitData(req, res){
+  getInitData(req, res) {
 
-       Promise.all([Entry.aggregate({$group: { _id:'$site_name'}}), Entry.aggregate({$group: { _id:'$user_name'}})])
-       .then((docs) =>{
+    Promise.all([Entry.aggregate({ $group: { _id: '$site_name' } }), Entry.aggregate({ $group: { _id: '$user_name' } })])
+      .then((docs) => {
 
         var retData = {
-          sites:cleanIds(docs[0]),
-          users:cleanIds(docs[1])
+          sites: cleanIds(docs[0]),
+          users: cleanIds(docs[1])
         }
-        
+
         res.send(retData);
       }).catch((e) => {
-         res.status(400).send(e);
+        res.status(400).send(e);
       });
   }
 
@@ -53,7 +53,6 @@ var cleanIds = (arr) => {
   arr.forEach((el) => {
     retArr.push(el._id);
   })
-  console.log(retArr)
   return retArr;
 
 }
